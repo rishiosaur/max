@@ -1,0 +1,60 @@
+// Nodejs encryption with CTR
+var crypto = require('crypto'),
+    algorithm = 'aes-256-ctr',
+    figlet = require("figlet");
+
+const ora = require("ora")
+
+const chalkAnimation = require('chalk-animation');
+
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+figlet('Hi Max!!!', function (err, data) {
+    if (err) {
+        console.log('Oh noes... something went wrong!');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+    readline.question("Max, congratulating on getting this far. However, there is still one task you must do: there is a key hidden in the message that I've sent you. Find the key, and enter it here. I'll be waiting.\n> ", key => {
+        console.log(`AES256 KEY: ${key}`);
+
+
+
+        function decrypt(text) {
+            var decipher = crypto.createDecipher(algorithm, key)
+            var dec = decipher.update(text, 'hex', 'utf8')
+            dec += decipher.final('utf8');
+            return dec;
+        }
+
+        const letter = decrypt(`cb215282ba11ef3e20909bc8f16971501c34fcc9f8b6d0ab3311f3175da5e8d6eb0b5d738a67cf8a89c2c39a83dd5fda285086616def65bedd976614a69fd13ec6b667b6ada1727457f270fc3b8e17e904b1260991b25e226bc83907ae93f46d8bd0f960f4aa43e60604bcb4b8653715c57794329659c8e97457779ca91f6197f52df766f3a451a1e5929f77e15060943fadc9276aa977a718b5aa27e455c12687858195a7060db0364f630eedaac6b57eb951972050316520f9af3241375104eed61531d94d156f7f52e1b1128afef6ad330ad0cfc36942e57507cef6d8e7e4331e6ad4250614873eb1480301514aaaf4bf50694a493b31bd9c31f841c48d2f75af30a3ecde5c3a53840d798a44c6eb38f85855ddf376b6831fa772c1a336c6bca6431cf49530309847c690cbc58622088e4928f9da8fff9575c46352398beb5a4de5c06cab5b9671cbd62f6e268728f5aedee8dc2be17fd5d05f2dc3874f8b73165c6dbc9b35109365698c061a380a8196ce3bbcd63d3dd7f4f683dc5bfdc2395204f43f0be97d4d3a3d5a73be887175b56f3045a18089769d294cb878b5aaf177e34551ab1e8d38e93734c6e74d2cb927ae5d397f4e4edb58e5bb20dfc48e0974b4d68b138360e5db03c7906f4563c901b3cf011c14484ce93beec37aedb9c5024c9eb5385a50b51d15cccce0d31fa19daa2aed76ad542f56f602e7015f20606944d32f20c547aca0a60bc5601631d65c34bb97683ee45f3c99c79332881a1d78db4ef78f1af4c3f8667b03d9701b4599895b69e93e91d7da1d8ec6aab366cde0a2390aed3844f597e19d6889b95c06aa910fec79b33fa754c7b6baa224cd41dbc3d2b1da06d547315beecfc9a80700ab3f827221ed5b744f0d22296bb778855487e956a8b221fe288edfc99789cda64390c3a8133dfd89f81a527a0211da4bb3aa805c51eb16e5c8736060d92459eba7d4ab6d9a6552306f5d574ae142fe691cb8a91bc669f32cb549ca5f5d2aba1ee1683abc0103537f0f0d3be308860d284c4455b1935abe1c1425bd7e9f89d0d77a0e297d32a7d55c6e4c759f0179bc36a091d5e91a5219113bedcc51e8751c6fdf3a34929121d35224cd9625a983141571b216a891874382e59256a08d07a0c7bc3001b3362ef4b2f7627431e6a1fb3972b26ae297458161aff2263f08120d3fcbc3811e71c07a166d011afefc461ff9dff54cdaceee478e382c24b9b0e2c200e97af7507f435515676944500b8e1466c5176f9c62e42f3a69000300b41ca05e2b3741b7a29d05b3d6ebebcf55361af37434a6285b5cd804549ae249dcf51a8602ba246cad99588338497176c5cbb698250572d8704f06d3570ad45296bc277029977299c15018062776c2236ef27eb794acb5331b908df3fd70459a3b55cb90aab9e64c021ee47606ef4fa021bfc80cab5eaa870b677197ecb4200b643dd4e29bf7fb11eee4eaf9ab3c0149caef982a3380745a1140e954376b75a9b9fcf3943d49195e9ffbefb2e4bccf8096b769ae1cac90822ce3d440965bd19da03f3408a0f457d4ad4161f0efa9fabe33c5ac75a17cb04ffe682c5b998811ed225d97df53c8b91d1137a4a890d769a39c590e6617812439db5f6a133bbda1ed25f5101fad4ed9f6485066b29dd5cb018005063da01c4d625b8977ae6f09e635ae7fff55d54e70c63c30e98ca1ffee0cebbdac254c5a3cea5caa09f7af31ddbdaab826e811d00ecdede63789ba30c632d01638bb483b969ae685bd1dc01d8ad62b5660b7065054d11867bc240dd652564a375b55979a84af29a421ce88f9c68ca232c3e573466266dc57e727975110a20b3f4021db00c85d9d4d3c03ddf1a142dca2bfba8a27174a9758e5649f98c21b0a0243da8269ac445ce9c17eae7da8ecee7f3485400188f4d34040f3a33a35479b3348877f15944eae941e3e0a3afe1d90e07bc8a65ece1a17b69ed3a00229ddacee04f7b7705ddc47431d875cd6266cbf7380acc3f1f866e79cefe26e25a98f659807eb02716ab654f134bcf5bd6edf9bd60e6b416c0d5a1a8e2f3752ecbc5328b7af0a0b8e7ee6cb3b3eddb1fc474e6a6b930d62bb2dd22fb7316cd055222ee25fb312605c5c8d0428ab45cafe642c32c0986087980324379d5dc92a5de6f3cb61164c2716f0650d11ef6cdcf2b0260f2e9ac3b6d5edb192872eec467747f54d7ccfe2c09fc5b1b16e5ba634735cc57caffdad3610de30cb2a9cc30410620034484f6b408c3ac2307c587d7226ce473e599295b79287b6fb03a82ea744d8393f5e0afa6141a71f192665a8bb687cd20c091f6a316075b748ba2fc53426c1136632e75f185b37245497f34dff21bb61d571cefde58d2767eb12317ec6c856f67531f5206d4fb74539a61d3e64522009cb1ca8408249bafe1d3e313a88884317e66f5d9a13b421caa62ba79815b6d065a46b9207d5fc07cda1013c177a0945a84581d93ca93bb2146df8f383c651361d475f05edb7879f377b604022639375dca6af27c02e3e459b7c419a0315834a9cc37cb93dd62946bfa6980e5325168e3827248e2ca95dfffe8636a486e642e3201b7e73d3e21f3299d8114042c8dda89e3c81105d24f68bd1c7cf73622090202d97704429a83292d9a7403ce06d6ac0da3785f39e2fdd53d2727e8cc63a78ca52ff19a70c737000c6d77a0bdb6fe6f10a5945401f4e583ffd8f45e6012738ccc3d981533cf30a5559bc61cf729fcdeda6320daf3f5a25063b934796f889c3a2cb0b4328568de4977a7ad4742eb62c78849eff06370665f73d2483863aa078881af94df1d063351a70dc14147077306d5969dd6f7ec12f319fec60d73ebcb81078f1739bdbb7f6790e0d84f98667eed04c7703dd74f213927cab0429b881ac28041e8b92215b9d4a3698795f8a0bbc8459a813adc652e2b1b14f2e33cda90279e8e5528fcae14b42405dac701a08eb0df20949b0ace615ef4383422f47e270f0f34c5900629fd35de4e6302520bdf88780b611b4767825347030c6aa877f49563cc90997c30cc9f68a042369ba6edf5d2d20220fc7e2c586d11a422b`);
+
+        const is_letter = letter.indexOf("Dear") > -1;
+
+        const spinner = ora('Let\'s see if you\'re correct. \n').start();
+
+        setTimeout(() => {
+            spinner.stop()
+            const e = chalkAnimation.glitch(`The council has spoken. Your key is ${is_letter ? "accepted" : "not accepted"}`)
+
+            setTimeout(() => {
+                e.stop()
+                e.render();
+
+                if (is_letter) {
+
+                    chalkAnimation.neon(`As it turns out, your guess was ${is_letter}. Here's the hidden message: \n \n `)
+
+                    console.log(letter)
+
+                } else {
+                    console.log("Please try again. You're probably thinking too hard about it. Hint: The key is FIRST in LINE.")
+                }
+            }, 1500)
+        }, 2000);
+    });
+});

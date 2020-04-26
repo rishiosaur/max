@@ -1,0 +1,15 @@
+{
+  "name": "max",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rishiosaur/max.git",
+  "author": "Rishi Kothari <itsrishikothari@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk-animation": "^1.6.0",
+    "cryptojs": "^2.5.3",
+    "figlet": "^1.3.0",
+    "ora": "^4.0.4",
+    "readline": "^1.3.0"
+  }
+}
